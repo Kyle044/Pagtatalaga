@@ -7,7 +7,7 @@ function Navigation() {
     <div className="navigation">
       <nav>
         <Link to="/">
-          <img src="img/mergedlogo.png" height={170} />
+          <img src="../public/img/mergedlogo.png" height={170} />
         </Link>
         <div className="conttwo">
           <label for="toggle">&#9776;</label>
