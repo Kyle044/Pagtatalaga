@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+  --text: #3f3f44;
+  --accent1: #f5f5f5;
+  --accent2: #13aa52;
+  --accent3: #cceabb;
+  --accent4: #228896;
+  --bkg1: #cceabb;
+  --bkg2: #65ac3a;
+  --shadow: 20px 20px 50px hsl(255, 36%, 17%, 0.35),
+    -30px -30px 50px hsl(26, 37%, 96%, 0.15);
+  --text-dark: #3f3f44;
+  --accent1-dark: #f5f5f5;
+  --accent2-dark: #13aa52;
+  --accent3-dark: #cceabb;
+  --accent4-dark: #228896;
+  --bkg1-dark: #cceabb;
+  --bkg2-dark: #3e7c17;
+  --shadow-dark: 20px 20px 50px hsl(255, 36%, 17%, 0.35),
+    -30px -30px 50px hsl(26, 37%, 96%, 0.15);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: var(--text-dark);
+    --accent1: var(--accent1-dark);
+    --accent2: var(--accent2-dark);
+    --accent3: var(--accent3-dark);
+    --accent4: var(--accent4-dark);
+    --bkg1: var(--bkg1-dark);
+    --bkg2: var(--bkg2-dark);
+    --shadow: var(--shadow-dark);
+  }
+}
+
+/* CSS */
+.btnGreen {
+  background-color: var(--accent2);
+  border: 1px solid var(--accent2);
+  border-radius: 4px;
+  margin-top: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  outline: 0;
+  padding: 10px 25px;
+  text-align: center;
+  transform: translateY(0);
+  transition: transform 150ms, box-shadow 150ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.btnGreen {
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 9px 0;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  .btnGreen {
+    padding: 10px 30px;
+  }
+}
+
+input {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 10px;
+  width: 100%;
+}
+input:hover {
+  border-color: var(--accent2);
+}
+input:focus {
+  border-color: var(--accent2);
+}
+label {
+  width: 100%;
+  font-weight: bold;
+}
+
+select {
+  padding: 10px;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+select:hover {
+  border-color: var(--accent2);
+}
+select:focus {
+  border-color: var(--accent2);
+}
+
+.pheader {
+  background: var(--accent1);
+  font-weight: bold;
+  text-align: justify;
+  line-height: 2rem;
+  width: 80%;
+  margin: auto;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.bg {
+  background: var(--accent1);
+}
+.btnflex {
+  margin-top: 10px;
+  border-top: 2px solid var(--accent2);
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+}
+
+.bgGreen {
+  background: var(--accent2);
+}

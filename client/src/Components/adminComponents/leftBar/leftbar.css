@@ -1,0 +1,47 @@
+.masterLeftBar {
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.linkcard {
+  display: flex;
+  padding: 15px;
+  align-items: center;
+  padding-left: 25%;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.4s ease;
+  color: white;
+}
+.linkcard h4 {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.linkcard:hover {
+  background-color: #1e282c;
+}
+.wat:hover {
+  background-color: #1e282c;
+}
+.linkcard:hover svg {
+  color: white;
+}
+.linkcard:hover h4 {
+  color: white;
+}
+
+.adname {
+  margin-bottom: 5rem;
+}
+.masterLeftBar ul {
+  list-style: none;
+  width: 100%;
+}
+
+.masterLeftBar ul li {
+  margin-bottom: 4rem;
+}

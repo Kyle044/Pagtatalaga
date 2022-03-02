@@ -1,0 +1,312 @@
+.backg {
+  min-height: 100vh;
+  width: 100%;
+  background-image: url(/public/img/about.jpg);
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+.abt {
+  margin-top: 10%;
+}
+a:hover {
+  text-decoration: none;
+  color: white;
+}
+.cont {
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.cont2 {
+  padding-top: 2rem;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  justify-content: space-evenly;
+}
+.cont3 {
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+h2 {
+  margin-left: 50px;
+  margin-right: 50px;
+  text-align: justify;
+}
+.simg {
+  background-image: url(/public/img/school.jpg);
+  height: 70vh;
+  width: 500px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.simg:hover {
+  background-image: linear-gradient(
+      rgba(10, 73, 245, 0.7),
+      rgba(84, 235, 134, 0.7)
+    ),
+    url(/public/img/school.jpg);
+  height: 75vh;
+  width: 550px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+
+.mvimg {
+  background-image: url(/public/img/mission.png);
+  height: 70vh;
+  width: 500px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.mvimg:hover {
+  background-image: linear-gradient(
+      rgba(10, 73, 245, 0.7),
+      rgba(84, 235, 134, 0.7)
+    ),
+    url(/public/img/mission.png);
+  height: 75vh;
+  width: 550px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+.d1 {
+  background-image: url(/public/img/cenica.jpg);
+  height: 50vh;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.d1:hover {
+  background-image: linear-gradient(
+      rgba(130, 111, 241, 0.1),
+      rgba(86, 124, 195, 0.7)
+    ),
+    url(/public/img/cenica.jpg);
+  height: 53vh;
+  width: 325px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+.d2 {
+  background-image: url(/public/img/trisha.jpg);
+  height: 50vh;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.d2:hover {
+  background-image: linear-gradient(
+      rgb(255, 255, 255, 0.1),
+      rgba(86, 124, 195, 0.7)
+    ),
+    url(/public/img/trisha.jpg);
+  height: 53vh;
+  width: 325px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+.d3 {
+  background-image: url(/public/img/jessa.jpg);
+  height: 50vh;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.d3:hover {
+  background-image: linear-gradient(
+      rgb(130, 111, 241, 0.1),
+      rgba(86, 124, 195, 0.7)
+    ),
+    url(/public/img/jessa.jpg);
+  height: 53vh;
+  width: 325px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+.d4 {
+  background-image: url(/public/img/christian.jpg);
+  height: 50vh;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.d4:hover {
+  background-image: linear-gradient(
+      rgb(255, 255, 255, 0.1),
+      rgba(86, 124, 195, 0.7)
+    ),
+    url(/public/img/christian.jpg);
+  height: 53vh;
+  width: 325px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+.d5 {
+  background-image: url(/public/img/nathaniel.jpg);
+  height: 50vh;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.d5:hover {
+  background-image: linear-gradient(
+      rgb(255, 255, 255, 0.1),
+      rgba(86, 124, 195, 0.7)
+    ),
+    url(/public/img/nathaniel.jpg);
+  height: 53vh;
+  width: 325px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+.texth {
+  font-size: 2.5vw;
+}
+.textb {
+  font-size: 1vw;
+}
+@media (max-width: 950px) {
+  .cont {
+    flex-direction: column;
+  }
+  .cont2 {
+    flex-direction: column;
+  }
+  .cont3 {
+    flex-direction: column;
+  }
+  .d1 {
+    width: auto;
+    height: 70vh;
+  }
+  .d1:hover {
+    width: auto;
+    height: 75vh;
+  }
+  .d2 {
+    width: auto;
+    height: 70vh;
+  }
+  .d2:hover {
+    width: auto;
+    height: 75vh;
+  }
+  .d3 {
+    width: auto;
+    height: 70vh;
+  }
+  .d3:hover {
+    width: auto;
+    height: 75vh;
+  }
+  .d4 {
+    width: auto;
+    height: 70vh;
+  }
+  .d4:hover {
+    width: auto;
+    height: 75vh;
+  }
+  .d5 {
+    width: auto;
+    height: 70vh;
+  }
+  .d5:hover {
+    width: auto;
+    height: 75vh;
+  }
+  .simg {
+    width: auto;
+  }
+  .simg:hover {
+    width: auto;
+  }
+  .mvimg {
+    width: auto;
+  }
+  .mvimg:hover {
+    width: auto;
+  }
+  .texth {
+    font-size: 6vw;
+  }
+  .textb {
+    font-size: 2vw;
+  }
+}

@@ -1,0 +1,62 @@
+.statDiv {
+  display: flex;
+  width: 100%;
+  height: 25vh;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.totalRequest {
+  display: flex;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+
+  border-right: 5px solid rgb(52, 187, 52);
+}
+
+.totalRequest > h4 {
+  font-size: 2.7rem;
+  margin-right: 10px;
+  color: rgb(8, 175, 8);
+}
+
+.todayAppointment {
+  display: flex;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+
+  border-right: 5px solid rgb(89, 100, 200);
+}
+.todayAppointment > h4 {
+  font-size: 2.7rem;
+  margin-right: 10px;
+  color: rgb(80, 90, 180);
+}
+
+.appointment {
+  display: flex;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+
+  border-right: 5px solid rgb(219, 79, 79);
+}
+
+.appointment > h4 {
+  font-size: 2.7rem;
+  margin-right: 10px;
+  color: rgb(209, 40, 40);
+}
+
+.title {
+  margin-left: 5%;
+  font-weight: bold;
+}
+
+.tableDiv {
+  width: 90%;
+  margin: auto;
+  margin-top: 1rem;
+}
