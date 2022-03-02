@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./navigation.css";
+import logo from "../../../public/img/mergedlogo.png";
 
 function Navigation() {
   return (
     <div className="navigation">
       <nav>
         <Link to="/">
-          <img src="img/mergedlogo.png" height={170} />
+          <img src={logo} height={170} />
         </Link>
         <div className="conttwo">
           <label for="toggle">&#9776;</label>
