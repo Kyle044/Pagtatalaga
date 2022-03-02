@@ -11,7 +11,7 @@
       rgba(252, 252, 253, 0.7),
       rgba(197, 206, 243, 0.7)
     ),
-    url(img/classroom.jpg);
+    url(/public/img/classroom.jpg);
   background-position: center;
   background-size: cover;
   position: relative;
