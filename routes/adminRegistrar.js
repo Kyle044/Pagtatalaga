@@ -3,8 +3,8 @@ const { Register, Signin, protected } = require("../controller/AdminReg");
 const requireRegistrarLogin = require("../Middleware/requireRegistrarLogin");
 const router = express.Router();
 
-router.post("/register", Register);
-router.get("/protected", requireRegistrarLogin, protected);
-router.post("/login", Signin);
+router.post("/Register", Register);
+router.get("/Protected", requireRegistrarLogin, protected);
+router.post("/Login", Signin);
 
 module.exports = router;

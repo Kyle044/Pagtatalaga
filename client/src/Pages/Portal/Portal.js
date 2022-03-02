@@ -19,10 +19,10 @@ function Portal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.REACT_APP_KEY}/login`, state)
+      .post(`${process.env.REACT_APP_KEY}/Login`, state)
       .then((res) => {
         localStorage.setItem("token", res.data.token);
-        navigate("/admin");
+        navigate("/Admin");
       })
       .catch((err) => {
         console.log(err);
