@@ -3,7 +3,7 @@ import axios from "axios";
 import "./dashboard.css";
 import Modal from "@mui/material/Modal";
 import QRCode from "qrcode";
-function Dashboard({ admin, setAdmin }) {
+function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
   const [adminssion, setAdminssion] = useState([]);
   const [src, setSrc] = useState({ src: "", data: "" });
   const [student, setStudent] = useState([]);
@@ -100,6 +100,7 @@ function Dashboard({ admin, setAdmin }) {
         .then((res) => {
           alert(res.data);
           getStudent();
+          getAdmission();
         })
         .catch((err) => {
           console.log(err);
@@ -107,7 +108,27 @@ function Dashboard({ admin, setAdmin }) {
     } else {
     }
   };
+  const requestToday = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/requestToday`)
+      .then((res) => {
+        setStudent(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  const requestAdminToday = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/requestAdminToday`)
+      .then((res) => {
+        setAdminssion(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const style = {
     position: "absolute",
     top: "50%",
@@ -128,19 +149,19 @@ function Dashboard({ admin, setAdmin }) {
         </div>
         <div className="statDiv">
           <div className="totalRequest shadow-lg ">
-            <h4>1500</h4>
+            <h4>{totalRequest ? totalRequest : 0}</h4>
             <div className="content">
               <h4>Total Request</h4>
             </div>
           </div>
           <div className="todayAppointment shadow-lg">
-            <h4>1500</h4>
+            <h4>{today ? today : 0}</h4>
             <div className="content">
               <h4>Today Appointment</h4>
             </div>
           </div>
           <div className="appointment shadow-lg">
-            <h4>1500</h4>
+            <h4>{totalAppointment ? totalAppointment : 0}</h4>
             <div className="content">
               <h4>Total Appointment</h4>
             </div>
@@ -151,13 +172,28 @@ function Dashboard({ admin, setAdmin }) {
         <div className="w-11/12 m-auto p-3 flex items-center">
           <div
             onClick={() => {
-              console.log(admin.Authentication);
+              if (admin.Authentication == "registrar") {
+                getStudent();
+              } else {
+                getAdmission();
+              }
             }}
             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
           >
             All Request
           </div>
-          <div className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 ">
+          <div
+            onClick={() => {
+              if (admin.Authentication == "registrar") {
+                requestToday();
+                console.log(student);
+              } else {
+                requestAdminToday();
+                console.log(adminssion);
+              }
+            }}
+            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
+          >
             Request Today
           </div>
         </div>
@@ -165,9 +201,12 @@ function Dashboard({ admin, setAdmin }) {
           <table class="border-collapse table-auto w-full text-sm">
             <thead>
               <tr>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                  Student #
-                </th>
+                {admin.Authentication == "registrar" ? (
+                  <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                    Student #
+                  </th>
+                ) : null}
+
                 <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
                   Name
                 </th>
@@ -233,9 +272,6 @@ function Dashboard({ admin, setAdmin }) {
                 : adminssion.map((stud) => {
                     return (
                       <tr>
-                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                          {stud.StudentID}
-                        </td>
                         <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                           {stud.Name}
                         </td>

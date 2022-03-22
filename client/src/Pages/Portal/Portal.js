@@ -26,6 +26,7 @@ function Portal() {
       })
       .catch((err) => {
         console.log(err);
+        alert("Invalid Username or Password");
       });
   };
   return (

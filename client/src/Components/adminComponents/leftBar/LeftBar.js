@@ -94,8 +94,8 @@ function LeftBar({ setToggle, toggle, admin, setAdmin }) {
               });
             }}
           >
-            <h4 className="flex w-fit m-auto   items-center justify-center font-bold text-white ">
-              <BsFillCalendar2CheckFill className="mr-4 group-hover:text-white " />{" "}
+            <h4 className="flex w-fit ml-14 items-start justify-center font-bold text-white ">
+              <BsFillCalendar2CheckFill className="mr-2 group-hover:text-white " />{" "}
               Appointment
             </h4>
           </div>
@@ -120,14 +120,6 @@ function LeftBar({ setToggle, toggle, admin, setAdmin }) {
             >
               Add Appointment
             </h4>
-            <h4
-              onClick={() => {
-                clickEdit();
-              }}
-              className="font-bold  cursor-pointer pl-16 pt-4 pb-4 text-sm w-full hover:bg-green-200"
-            >
-              Edit Appointment
-            </h4>
           </div>
         </li>
         <li>
@@ -135,15 +127,13 @@ function LeftBar({ setToggle, toggle, admin, setAdmin }) {
             className="linkcard"
             onClick={() => {
               clickConfig();
-              setDrop((prev) => {
-                return { ...prev, app: false };
-              });
             }}
           >
-            <DiAptana />
+            <RiDashboardFill />
             <h4>Configuration</h4>
           </div>
         </li>
+
         <li>
           <li>
             <div

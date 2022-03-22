@@ -201,8 +201,32 @@ exports.rejectRequest = (req, res) => {
   });
 };
 
-exports.getRequestCount = (req, res) => {
-  Request.count().then((count) => {
+exports.getRequestCountReg = (req, res) => {
+  Request.count({ Office: "Registrar" }).then((count) => {
+    res.json(count);
+  });
+};
+
+exports.getRequestCountAdmin = (req, res) => {
+  Request.count({ Office: "Admission" }).then((count) => {
+    res.json(count);
+  });
+};
+
+exports.getRequestToday = (req, res) => {
+  Request.find({
+    Office: "Registrar",
+    "Appointment.date": moment(new Date()).format("YYYY-MM-DD")
+  }).then((count) => {
+    res.json(count);
+  });
+};
+
+exports.getRequestAdminToday = (req, res) => {
+  Request.find({
+    Office: "Admission",
+    "Appointment.date": moment(new Date()).format("YYYY-MM-DD")
+  }).then((count) => {
     res.json(count);
   });
 };

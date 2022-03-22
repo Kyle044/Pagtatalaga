@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema(
   {
+    Office: String,
     Date: String,
     Time: [
       {

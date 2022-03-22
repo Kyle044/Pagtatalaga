@@ -23,10 +23,14 @@ const studentRouter = require("./routes/Student");
 const adminRouter = require("./routes/adminRegistrar");
 const appointmentRouter = require("./routes/appointmentRoute");
 const RequestRouter = require("./routes/requestRoute");
+const courseRouter = require("./routes/courseRouter");
+const requestListRouter = require("./routes/requestListRouter");
 app.use("/api", studentRouter);
 app.use("/api", adminRouter);
 app.use("/api", appointmentRouter);
 app.use("/api", RequestRouter);
+app.use("/api", courseRouter);
+app.use("/api", requestListRouter);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {

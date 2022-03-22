@@ -1,0 +1,138 @@
+/* course style */
+
+.headerCourse {
+  display: flex;
+  width: 80%;
+  height: 10vh;
+  padding: 0 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.outlineBtnCourse {
+  display: flex;
+  align-items: center;
+  border: 1px solid green;
+  padding: 10px;
+  cursor: pointer;
+  color: green;
+  transition: 0.3s ease;
+}
+.outlineBtnCourse:hover {
+  display: flex;
+  align-items: center;
+  border: 2px solid green;
+  padding: 10px;
+  cursor: pointer;
+  color: green;
+  font-weight: bold;
+}
+.outlineBtnCourse h4 {
+  margin: 0 4px;
+}
+.headerCourse h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.tableCourse {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 3rem;
+}
+
+.tableStyle {
+  background-color: rgb(51, 51, 51);
+  width: 80%;
+  border-radius: 10px;
+  padding: 10px;
+  border-collapse: collapse;
+  color: white;
+}
+.tableStyle thead th {
+  background-color: rgb(55, 66, 84);
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+.tableStyle thead tr {
+  border-radius: 10px;
+}
+
+.btnGroup {
+  display: flex;
+  width: 90%;
+  justify-content: start;
+}
+
+.btnGroup div {
+  display: flex;
+  margin: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btnGroup div h3 {
+  margin: 0 5px;
+}
+.tableStyle td {
+  padding: 5px;
+}
+
+.tableStyle td {
+  padding-left: 15px;
+}
+
+.btnGroup div:hover {
+  transform: scale(1.03);
+}
+
+.sectionSpace {
+  margin: 4rem 0;
+}
+.modalz {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modalz-content {
+  background-color: #f4f4f4;
+  margin: 20% auto;
+
+  width: 50%;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
+}
+.modalz-content h3 {
+  font-size: 30px;
+}
+.modalz-header {
+  padding: 10px;
+  background-color: #16a34a;
+  width: 100%;
+  color: white;
+}
+.closeBtnz {
+  color: #ccc;
+  float: right;
+  font-size: 30px;
+}
+
+.closeBtnz:hover,
+.closeBtnz:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modalz-body {
+  padding: 10px;
+  height: 30vh;
+}

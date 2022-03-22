@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import "./appform.css";
-function AppForm() {
+function AppForm({ admin }) {
   const initialState = {
     Date: "",
-    Time: []
+    Time: [],
+    Office: admin.Username.charAt(0).toUpperCase() + admin.Username.slice(1)
   };
 
   const [state, setState] = useState(initialState);
@@ -27,6 +28,8 @@ function AppForm() {
       .post(`${process.env.REACT_APP_KEY}/insertApp`, state)
       .then((res) => {
         console.log(res.data);
+        alert("Appointment Added");
+        setState(initialState);
       })
       .catch((err) => {
         console.log(err);

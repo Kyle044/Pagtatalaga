@@ -74,15 +74,25 @@ function Infoform() {
     setCurrent(0);
   };
   const submit = () => {
-    axios
-      .post(`${process.env.REACT_APP_KEY}/insertRequest`, form)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // setForm(initialForm) TODO:;
+    if (
+      form.Appointment.app &&
+      form.Appointment.date &&
+      form.Appointment.time
+    ) {
+      axios
+        .post(`${process.env.REACT_APP_KEY}/insertRequest`, form)
+        .then((res) => {
+          console.log(res.data);
+          alert("Successfully Submitted Wait for the email");
+          setCurrent(0);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      setForm(initialForm);
+    } else {
+      alert("Please fill up the fields");
+    }
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -366,6 +376,25 @@ function Infoform() {
                 type="submit"
                 className="btnGreen"
                 onClick={() => {
+                  if (form.Admin == "Admission") {
+                    axios
+                      .get(`${process.env.REACT_APP_KEY}/getAppAdmin`)
+                      .then((res) => {
+                        setAppointment(res.data);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  } else {
+                    axios
+                      .get(`${process.env.REACT_APP_KEY}/getAppReg`)
+                      .then((res) => {
+                        setAppointment(res.data);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                  }
                   nextApp();
                 }}
               >
@@ -403,17 +432,11 @@ function Infoform() {
                           </div>
                         );
                       } else {
-                        return (
-                          <div>
-                            <h4>Null</h4>
-                          </div>
-                        );
+                        return <div></div>;
                       }
                     })
                   ) : (
-                    <div>
-                      <h4>Null</h4>
-                    </div>
+                    <div></div>
                   )}
                 </div>
               </div>
@@ -458,11 +481,7 @@ function Infoform() {
                           </div>
                         );
                       } else {
-                        return (
-                          <div>
-                            <h4>Null</h4>
-                          </div>
-                        );
+                        return <div></div>;
                       }
                     })}
                 </div>

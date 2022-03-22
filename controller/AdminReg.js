@@ -41,18 +41,22 @@ exports.Signin = (req, res) => {
     .then((users) => {
       if (!users) {
         res.status(402).json("Please Enter The Right Username");
+      } else {
+        bcrypt
+          .compare(Password, users.Password)
+          .then((doMatch) => {
+            if (doMatch) {
+              const token = jwt.sign(
+                { _id: users._id },
+                process.env.JWT_SECRET
+              );
+              res.json({ token });
+            } else {
+              res.status(422).json("Invalid Username or Password");
+            }
+          })
+          .catch((err) => console.log("There is an Error Signing in : " + err));
       }
-      bcrypt
-        .compare(Password, users.Password)
-        .then((doMatch) => {
-          if (doMatch) {
-            const token = jwt.sign({ _id: users._id }, process.env.JWT_SECRET);
-            res.json({ token });
-          } else {
-            return res.status(422).json("Invalid Username or Password");
-          }
-        })
-        .catch((err) => console.log("There is an Error Signing in : " + err));
     })
     .catch((err) => res.status(400).json("The Error is : " + err));
 };

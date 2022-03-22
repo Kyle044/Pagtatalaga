@@ -21,6 +21,12 @@ function Admin() {
     Edit: false
   });
 
+  const [count, setCount] = useState({
+    totalRequest: "",
+    totalAppointment: "",
+    totalAppNow: ""
+  });
+
   const getAdmin = (token) => {
     axios
       .get(`${process.env.REACT_APP_KEY}/protected`, {
@@ -30,13 +36,93 @@ function Admin() {
       })
       .then((res) => {
         setAdmin(res.data);
-        console.log(res.data);
+        if (res.data.Username == "registrar") {
+          getRequestCountReg();
+          getAppointmentCountReg();
+          getTodayAppointmentReg();
+        } else {
+          getRequestCountAdmin();
+          getAppointmentCountAdmin();
+          getTodayAppointmentAdmin();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getTodayAppointmentReg = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getAppTodayReg`)
+      .then((res) => {
+        setCount((prev) => {
+          return { ...prev, totalAppNow: res.data };
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const getTodayAppointmentAdmin = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getAppTodayAdmin`)
+      .then((res) => {
+        setCount((prev) => {
+          return { ...prev, totalAppNow: res.data };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getRequestCountAdmin = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getRequestCountAdmin`)
+      .then((res) => {
+        setCount((prev) => {
+          return { ...prev, totalRequest: res.data };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getRequestCountReg = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getRequestCountReg`)
+      .then((res) => {
+        setCount((prev) => {
+          return { ...prev, totalRequest: res.data };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getAppointmentCountReg = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getAppCountReg`)
+      .then((res) => {
+        setCount((prev) => {
+          return { ...prev, totalAppointment: res.data };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const getAppointmentCountAdmin = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getAppCountAdmin`)
+      .then((res) => {
+        setCount((prev) => {
+          return { ...prev, totalAppointment: res.data };
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     var token = localStorage.getItem("token");
     getAdmin(token);
@@ -61,7 +147,13 @@ function Admin() {
         {admin ? (
           <div className="meron">
             {toggle.Dashboard ? (
-              <Dashboard admin={admin} setAdmin={setAdmin} />
+              <Dashboard
+                admin={admin}
+                setAdmin={setAdmin}
+                totalRequest={count.totalRequest}
+                totalAppointment={count.totalAppointment}
+                today={count.totalAppNow}
+              />
             ) : null}
 
             {toggle.Appointment ? (

@@ -4,7 +4,7 @@ import { AiTwotoneEdit } from "react-icons/ai";
 import { HiViewGridAdd } from "react-icons/hi";
 import moment from "moment";
 import Modal from "@mui/material/Modal";
-function Appointment() {
+function Appointment({ admin }) {
   const [appointment, setAppointment] = useState([]);
   const [modal, setModal] = useState(false);
   const [selectedApp, setSelectedApp] = useState();
@@ -16,20 +16,30 @@ function Appointment() {
   const handleAppointmentChange = (e) => {
     const { name, value } = e.target;
 
-    setEditAppointment((prev) => {
+    setSelectedApp((prev) => {
       return { ...prev, [name]: value };
     });
   };
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_KEY}/getApp`)
-      .then((res) => {
-        console.log(res.data[0].Time[0]);
-        setAppointment(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (admin.Authentication == "registrar") {
+      axios
+        .get(`${process.env.REACT_APP_KEY}/getAppReg`)
+        .then((res) => {
+          setAppointment(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_KEY}/getAppAdmin`)
+        .then((res) => {
+          setAppointment(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   const handleEditAppointment = (app) => {
@@ -43,14 +53,25 @@ function Appointment() {
       axios
         .delete(`${process.env.REACT_APP_KEY}/deleteApp`, { data: app })
         .then((res) => {
-          axios
-            .get(`${process.env.REACT_APP_KEY}/getApp`)
-            .then((res) => {
-              setAppointment(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          if (admin.Authentication == "registrar") {
+            axios
+              .get(`${process.env.REACT_APP_KEY}/getAppReg`)
+              .then((res) => {
+                setAppointment(res.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            axios
+              .get(`${process.env.REACT_APP_KEY}/getAppAdmin`)
+              .then((res) => {
+                setAppointment(res.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -64,6 +85,46 @@ function Appointment() {
 
   const handleDeleteTime = (time) => {
     console.log(time);
+
+    setSelectedApp((prev) => {
+      return {
+        ...prev,
+        Time: prev.Time.filter((e) => {
+          return e != time;
+        })
+      };
+    });
+  };
+  const submitEditedAppointment = (id) => {
+    console.log(selectedApp);
+
+    axios
+      .post(`${process.env.REACT_APP_KEY}/editApp`, selectedApp)
+      .then((res) => {
+        alert(res.data);
+         if (admin.Authentication == "registrar") {
+           axios
+             .get(`${process.env.REACT_APP_KEY}/getAppReg`)
+             .then((res) => {
+               setAppointment(res.data);
+             })
+             .catch((err) => {
+               console.log(err);
+             });
+         } else {
+           axios
+             .get(`${process.env.REACT_APP_KEY}/getAppAdmin`)
+             .then((res) => {
+               setAppointment(res.data);
+             })
+             .catch((err) => {
+               console.log(err);
+             });
+         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div>
@@ -121,22 +182,27 @@ function Appointment() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <div className="m-auto w-3/5 h-3/5 mt-28 bg-slate-300 p-4 rounded-lg">
+          <div
+            className="bg-gray-300 h-full flex items-center justify-evenly
+          "
+          >
             {selectedApp && (
-              <div className="w-4/6 m-auto">
+              <div className="w-4/6 m-auto h-full flex flex-col justify-evenly p-12">
                 <label>Date : {moment(selectedApp.Date).format("LL")}</label>
                 <input
                   type="date"
-                  value={editAppointment.date}
-                  name="date"
+                  value={selectedApp.Date}
+                  name="Date"
                   onChange={handleAppointmentChange}
                 />
-                <label>Time</label>
+                <label className="my-4">Time</label>
                 <ul>
                   {selectedApp.Time.map((time) => {
                     return (
-                      <li className="flex w-full  m-1 items-center justify-evenly p-2">
+                      <li className="flex w-full  m-1 items-center justify-between p-2">
                         <h4 className="font-bold">
+                          {time.Request.Name &&
+                            `Booked by ${time.Request.Name} at `}
                           {moment(time.Time, "hh:mm").format("LT")}
                         </h4>{" "}
                         <div
@@ -155,7 +221,7 @@ function Appointment() {
                   <div
                     className="btnGreen"
                     onClick={() => {
-                      console.log(editAppointment);
+                      submitEditedAppointment(selectedApp._id);
                     }}
                   >
                     Submit
@@ -164,7 +230,7 @@ function Appointment() {
                     onClick={() => {
                       setModal(false);
                     }}
-                    className="cursor-pointer bg-red-600 p-2 mt-4 shadow-lg h-12 text-slate-100 rounded-md flex items-center justify-center"
+                    className="cursor-pointer bg-red-600 p-2 mt-4 mb-2 shadow-lg h-11 text-slate-100 rounded-md flex items-center justify-center"
                   >
                     Cancel
                   </div>
