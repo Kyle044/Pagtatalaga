@@ -96,31 +96,29 @@ function Appointment({ admin }) {
     });
   };
   const submitEditedAppointment = (id) => {
-    console.log(selectedApp);
-
     axios
       .post(`${process.env.REACT_APP_KEY}/editApp`, selectedApp)
       .then((res) => {
         alert(res.data);
-         if (admin.Authentication == "registrar") {
-           axios
-             .get(`${process.env.REACT_APP_KEY}/getAppReg`)
-             .then((res) => {
-               setAppointment(res.data);
-             })
-             .catch((err) => {
-               console.log(err);
-             });
-         } else {
-           axios
-             .get(`${process.env.REACT_APP_KEY}/getAppAdmin`)
-             .then((res) => {
-               setAppointment(res.data);
-             })
-             .catch((err) => {
-               console.log(err);
-             });
-         }
+        if (admin.Authentication == "registrar") {
+          axios
+            .get(`${process.env.REACT_APP_KEY}/getAppReg`)
+            .then((res) => {
+              setAppointment(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          axios
+            .get(`${process.env.REACT_APP_KEY}/getAppAdmin`)
+            .then((res) => {
+              setAppointment(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       })
       .catch((err) => {
         console.log(err);

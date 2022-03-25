@@ -2,6 +2,57 @@ const { listenerCount } = require("../model/Appointment");
 let Appointment = require("../model/Appointment");
 let Request = require("../model/Request");
 const moment = require("moment");
+const nodemailer = require("nodemailer");
+async function smtp(to, sub, mes, date) {
+  // Generate test SMTP service account from ethereal.email
+  // Only needed if you don't have a real mail account for testing
+  let testAccount = await nodemailer.createTestAccount();
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "pamantasan04@gmail.com", // generated ethereal user
+      pass: "thesis123" // generated ethereal password
+    }
+  });
+
+  var option = {
+    from: '"PLSP" <pamantasan@gmail.com>', // sender address
+    to: to, // list of receivers
+    subject: sub, // Subject line
+    text: mes, // plain text body
+    html: `<html>
+    <head>
+  <style>
+  
+  </style>
+    
+    </head>
+    <body>
+    
+    <h1>The Request appointment was updated to ${date}</h1>
+    
+    </body>
+    
+    </html>` // html body,
+  };
+
+  let info;
+  // send mail with defined transport object
+
+  info = await transporter.sendMail(option);
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+}
+
 exports.insertAppointment = (req, res) => {
   var newApp = new Appointment(req.body);
   newApp
@@ -98,7 +149,6 @@ exports.getTodayAppointmentReg = (req, res) => {
 };
 
 exports.editAppointment = (req, res) => {
-  console.log(req.body);
   const { _id, Date, Time, Office } = req.body;
   Appointment.findById(_id)
     .then((app) => {
@@ -107,7 +157,25 @@ exports.editAppointment = (req, res) => {
       app
         .save()
         .then(() => {
-          res.json("Update Success");
+          Request.updateMany(
+            { "Appointment.app._id": _id },
+            { $set: { "Appointment.date": Date } }
+          )
+            .then((re) => {
+              Request.find({ "Appointment.app._id": _id })
+                .then((wat) => {
+                  wat.forEach((s) => {
+                    smtp(s.Email, "Updated Appointment", "null", Date);
+                  });
+                  res.json("Updated Sucessfully");
+                })
+                .catch((err) => {
+                  res.json(err);
+                });
+            })
+            .catch((err) => {
+              res.json(err);
+            });
         })
         .catch((err) => {
           res.json("There was an error updating the Appointment");

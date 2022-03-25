@@ -101,26 +101,38 @@ exports.insertRequest = (req, res) => {
     ReqYr,
     ReqSem
   } = req.body;
+  var index = 0;
+  var integerTime = [];
+  var integerHours = [];
+  var integerMinutes = [];
+  var sortedTime = [];
+  var queue = null;
+  console.log(Appointment);
+  Appointment.app.Time.forEach((appTime) => {
+    var time = parseInt(
+      appTime.Time.substring(0, 2) + appTime.Time.substring(3, 5)
+    );
+    var hours = appTime.Time.substring(0, 2);
+    var minutes = appTime.Time.substring(3, 5);
+    integerHours[index] = hours;
+    integerMinutes[index] = minutes;
+    integerTime[index] = time;
 
-  var timesOne = Appointment.app.Time.map((time) => {
-    return time.Time;
+    index++;
   });
-  var times = Appointment.app.Time.map((time) => {
-    var newTime = time.Time.substring(0, 2) + time.Time.substring(4, 7);
-    return parseInt(newTime);
-  });
-  var sortedTime = times.sort(function (a, b) {
+  integerTime.sort(function (a, b) {
     return a - b;
   });
-
-  var i = 0;
-  var queueTime = sortedTime.map((st) => {
-    i++;
-    return { queue: i, time: timesOne[i - 1] };
+  var b = 0;
+  integerTime.forEach((time) => {
+    var hour = time.toString().substring(0, 2);
+    var minutes = time.toString().substring(2, 4);
+    sortedTime[b] = `${hour}:${minutes}`;
+    if (`${hour}:${minutes}` == Appointment.time) {
+      queue = b + 1;
+    }
+    b++;
   });
-
-  let time = queueTime.find((o) => o.time === Appointment.time);
-
   App.findById(Appointment.app._id)
     .then((app) => {
       var objIndex = app.Time.findIndex((obj) => obj.Time == Appointment.time);
@@ -139,7 +151,7 @@ exports.insertRequest = (req, res) => {
         Email: Email,
         RequestedYear: ReqYr,
         RequestedSemester: ReqSem,
-        QueueNumber: time.queue
+        QueueNumber: queue
       });
       newRequest.save().then((request) => {
         res.json("Submitted Successfully.");
