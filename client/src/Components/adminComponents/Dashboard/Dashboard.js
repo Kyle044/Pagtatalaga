@@ -8,6 +8,26 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
   const [src, setSrc] = useState({ src: "", data: "" });
   const [student, setStudent] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [toggle, setToggle] = useState(false);
+  // accepted request =====
+
+  const [registrarAcceptedRequest, setRegistrarAcceptedRequest] = useState();
+  const [admissionAcceptedRequest, setAdmissionAcceptedRequest] = useState();
+
+  const getRegistrarAcceptedRequest = () => {
+    axios.get(`${process.env.REACT_APP_KEY}/getStudentRequestA`).then((res) => {
+      setRegistrarAcceptedRequest(res.data);
+    });
+  };
+
+  const getAdmissionAcceptedRequest = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getAdminssiontRequestA`)
+      .then((res) => {
+        setAdmissionAcceptedRequest(res.data);
+      });
+  };
+
   var encrypt = (str) => {
     let resultArray = [];
     for (var i = 0; i < str.length; i++) {
@@ -31,14 +51,7 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
     return resultArray.join("");
   };
   const handleOpen = (req) => {
-    var data = `Student# : ${req.StudentID}
-     Name : ${req.Name}
-     Age: ${req.Age}
-     Purpose : ${req.Purpose.map((p) => {
-       return p;
-     })} 
-    Date&Time Appointment : ${req.Appointment.date}||${req.Appointment.time}
-    Request For the Office of ${req.Office}`;
+    var data = req._id;
 
     console.log(encrypt(data));
     console.log(decrypt(encrypt(data)));
@@ -80,6 +93,21 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
   useEffect(() => {
     getStudent();
     getAdmission();
+    getRegistrarAcceptedRequest();
+    getAdmissionAcceptedRequest();
+    // setInterval(() => {
+    //   if (toggle) {
+    //     requestAdminTodayA();
+    //     requestTodayA();
+    //     requestToday();
+    //     requestAdminToday();
+    //   } else {
+    //     getStudent();
+    //     getAdmission();
+    //     getRegistrarAcceptedRequest();
+    //     getAdmissionAcceptedRequest();
+    //   }
+    // }, 3000);
   }, []);
 
   const handleSendEmail = (student) => {
@@ -129,6 +157,28 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
         console.log(err);
       });
   };
+
+  const requestTodayA = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/requestTodayA`)
+      .then((res) => {
+        setRegistrarAcceptedRequest(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const requestAdminTodayA = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/requestAdminTodayA`)
+      .then((res) => {
+        setAdmissionAcceptedRequest(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const style = {
     position: "absolute",
     top: "50%",
@@ -167,7 +217,7 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
             </div>
           </div>
         </div>
-
+        {/* PENDING REQUEST ======================================================= */}
         <h4 className="title">Student Request</h4>
         <div className="w-11/12 m-auto p-3 flex items-center">
           <div
@@ -311,6 +361,143 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
             </tbody>
           </table>
         </div>
+        {/* ACCEPTED REQUEST ======================================================= */}
+        <h4 className="title mt-5">Accepted Requests</h4>
+        <div className="w-11/12 m-auto p-3 flex items-center">
+          <div
+            onClick={() => {
+              if (admin.Authentication == "registrar") {
+                getRegistrarAcceptedRequest();
+              } else {
+                getAdmissionAcceptedRequest();
+              }
+            }}
+            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
+          >
+            All Request
+          </div>
+          <div
+            onClick={() => {
+              if (admin.Authentication == "registrar") {
+                requestTodayA();
+                console.log(student);
+              } else {
+                requestAdminTodayA();
+                console.log(adminssion);
+              }
+            }}
+            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
+          >
+            Request Today
+          </div>
+        </div>
+        <div className="tableDiv">
+          <table class="border-collapse table-auto w-full text-sm">
+            <thead>
+              <tr>
+                {admin.Authentication == "registrar" ? (
+                  <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                    Student #
+                  </th>
+                ) : null}
+
+                <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  Name
+                </th>
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  Age
+                </th>
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  Appointment
+                </th>
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  Purpose
+                </th>
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  Option
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-slate-800">
+              {admin.Authentication == "registrar"
+                ? registrarAcceptedRequest &&
+                  registrarAcceptedRequest.map((stud) => {
+                    return (
+                      <tr>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+                          {stud.StudentID}
+                        </td>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                          {stud.Name}
+                        </td>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          {stud.Age}
+                        </td>
+                        <td class="border-b flex flex-col justify-center border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          <h5> {stud.Appointment.date}</h5>
+                          <h5> {stud.Appointment.time}</h5>
+                        </td>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          {stud.Purpose.map((p) => {
+                            return <h4>{p}</h4>;
+                          })}
+                        </td>
+                        <td class="flex  items-center border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          <div
+                            onClick={() => {
+                              handleReject(stud);
+                            }}
+                            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-red-600 font-bold  text-white hover:bg-red-400 "
+                          >
+                            Reject
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                : admissionAcceptedRequest.map((stud) => {
+                    return (
+                      <tr>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                          {stud.Name}
+                        </td>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          {stud.Age}
+                        </td>
+                        <td class="border-b flex flex-col justify-center border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          <h5> {stud.Appointment.date}</h5>
+                          <h5> {stud.Appointment.time}</h5>
+                        </td>
+                        <td class="border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          {stud.Purpose.map((p) => {
+                            return <h4>{p}</h4>;
+                          })}
+                        </td>
+                        <td class="flex  items-center border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
+                          <div
+                            onClick={() => {
+                              handleOpen(stud);
+                            }}
+                            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
+                          >
+                            Accept
+                          </div>
+                          <div
+                            onClick={() => {
+                              handleReject(stud);
+                            }}
+                            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-red-600 font-bold  text-white hover:bg-red-400 "
+                          >
+                            Reject
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+            </tbody>
+          </table>
+        </div>
+
         <Modal
           open={open}
           onClose={handleClose}

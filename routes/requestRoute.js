@@ -9,20 +9,50 @@ const {
   getRegistrarRequest,
   getRequestCountAdmin,
   getRequestToday,
-  getRequestAdminToday
+  getRequestAdminToday,
+  markedOnQueueRequest,
+  markedasAdoneRequest,
+  scanQR,
+  getAdminssiontRequestAccepted,
+  getRequestAdminTodayAccepted,
+  getRequestTodayAccepted,
+  getStudentRequestAccepted
 } = require("../controller/RequestController");
 
 const router = express.Router();
 
 router.post("/insertRequest", insertRequest);
+// all request of students for the registrar that is not yet accepted
 router.get("/getStudentRequest", getStudentRequest);
-//  request of students for the admission
+// all request of students for the admission that is not yet accepted
 router.get("/getAdminssiontRequest", getAdminssiontRequest);
+
 router.post("/sendQR", sendQr);
 router.post("/rejectRequest", rejectRequest);
 router.get("/getRequestCountReg", getRequestCountReg);
 router.get("/getRequestCountAdmin", getRequestCountAdmin);
+
+// request of students for the admission today that is not yet accepted
 router.get("/requestAdminToday", getRequestAdminToday);
-// request of students for the registrar
+
+// request of students for the registrar today that is not yet accepted
 router.get("/requestToday", getRequestToday);
+
+// request of students for the admission today that is accepted
+router.get("/requestAdminTodayA", getRequestAdminTodayAccepted);
+
+// request of students for the registrar today that is accepted
+router.get("/requestTodayA", getRequestTodayAccepted);
+
+// all request of students for the registrar that is accepted
+router.get("/getStudentRequestA", getStudentRequestAccepted);
+// all request of students for the admission that is accepted
+router.get("/getAdminssiontRequestA", getAdminssiontRequestAccepted);
+
+//API ENDPOINTS FOR THE DEVICE ==========================================================
+
+router.post("/onQueue", markedOnQueueRequest);
+router.post("/markComplete", markedasAdoneRequest);
+router.post("/scanQR", scanQR);
+
 module.exports = router;

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const requestSchema = new Schema(
   {
+    IsAccepted: { type: String, default: "NOT ACCEPTED" },
     Appointment: {},
     Office: String,
     Name: String,
@@ -12,7 +13,11 @@ const requestSchema = new Schema(
     Year: String,
     Course: String,
     Purpose: [],
-    Email: String
+    Email: String,
+    Status: { type: String, default: "Pending" },
+    RequestedYear: String,
+    RequestedSemester: String,
+    QueueNumber: String
   },
   { timestamps: true }
 );

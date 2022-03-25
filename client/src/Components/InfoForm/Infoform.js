@@ -25,11 +25,44 @@ function Infoform() {
       date: "",
       time: ""
     },
-    Email: ""
+    Email: "",
+    ReqYr: "",
+    ReqSem: ""
   };
   const [appointment, setAppointment] = useState([]);
   const [form, setForm] = useState(initialForm);
   const [current, setCurrent] = useState(0);
+  const [requestList, setRequestList] = useState();
+  const [courses, setCourses] = useState();
+  //getCourse
+  const getCourse = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getCourse`)
+      .then((res) => {
+        console.log(res.data);
+        setCourses(res.data);
+      })
+      .catch((err) => {
+        alert("There was an error fetching courses");
+        console.log(err);
+      });
+  };
+
+  //getRequestList
+  const getRequestList = () => {
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getRequestList`)
+      .then((res) => {
+        console.log(res.data);
+        setRequestList(res.data);
+      })
+      .catch((err) => {
+        alert(
+          "There was an error fetching RequestList kindly reload the website"
+        );
+        console.log(err);
+      });
+  };
   const next = () => {
     if (form.Type == "Student") {
       if (
@@ -119,11 +152,13 @@ function Infoform() {
       .get(`${process.env.REACT_APP_KEY}/getApp`)
       .then((res) => {
         setAppointment(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
+
+    getCourse();
+    getRequestList();
   }, []);
 
   return (
@@ -207,10 +242,10 @@ function Infoform() {
                   value={form.Course}
                 >
                   <option value="">Select Course</option>
-                  <option value="Curse 1">Curse 1</option>
-                  <option value="Curse 2">Curse 2</option>
-                  <option value="Curse 3">Curse 3</option>
-                  <option value="Curse 4">Curse 4</option>
+                  {courses &&
+                    courses.map((c) => {
+                      return <option value={c.Course}>{c.Course}</option>;
+                    })}
                 </select>
               </div>
             ) : null}
@@ -225,6 +260,31 @@ function Infoform() {
           </div>
         ) : current == 1 ? (
           <div className="purposeDiv">
+            {form.Type == "Student" && (
+              <label>What Semester of Document are you requesting?</label>
+            )}
+            {form.Type == "Student" && (
+              <input
+                type="text"
+                name="ReqSem"
+                placeholder="Input Semester"
+                onChange={handleChange}
+                value={form.ReqSem}
+              />
+            )}
+            {form.Type == "Student" && (
+              <label>What Year of Document are you requesting?</label>
+            )}
+            {form.Type == "Student" && (
+              <input
+                type="text"
+                name="ReqYr"
+                placeholder="Input Year"
+                onChange={handleChange}
+                value={form.ReqYr}
+              />
+            )}
+
             <label>Office of</label>
             {form.Type == "Student" ? (
               <select
@@ -259,91 +319,19 @@ function Infoform() {
             {form.Admin == "Registrar" ? (
               <div className="checkContainer">
                 <div className="one">
-                  <FormControlLabel
-                    color="success"
-                    value="Transcript of Records"
-                    control={<Checkbox />}
-                    label="Transcript of Records"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-
-                  <FormControlLabel
-                    color="success"
-                    value="Transfer Credentials"
-                    control={<Checkbox />}
-                    label="Transfer Credentials"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-                  <FormControlLabel
-                    color="success"
-                    value="Certification of Grades"
-                    control={<Checkbox />}
-                    label="Certification of Grades"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-
-                  <FormControlLabel
-                    color="success"
-                    value="Certification of Graduation"
-                    control={<Checkbox />}
-                    label="Certification of Graduation"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-                  <FormControlLabel
-                    color="success"
-                    value="Certification of Enrollment"
-                    control={<Checkbox />}
-                    label="Certification of Enrollment"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-                  <FormControlLabel
-                    color="success"
-                    value="Certification of Honor"
-                    control={<Checkbox />}
-                    label="Certification of Honor"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-                </div>
-                <div className="two">
-                  <FormControlLabel
-                    color="success"
-                    value="Certification, Authentication and Verification"
-                    control={<Checkbox />}
-                    label="Certification, Authentication and Verification"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-                  <FormControlLabel
-                    color="success"
-                    value="Authentication of TOR/Dimploma"
-                    control={<Checkbox />}
-                    label="Authentication of TOR/Dimploma"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-                  <FormControlLabel
-                    color="success"
-                    value="Diploma"
-                    control={<Checkbox />}
-                    label="Diploma"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
-
-                  <FormControlLabel
-                    color="success"
-                    value="Enrollment"
-                    control={<Checkbox />}
-                    label="Enrollment"
-                    labelPlacement="start"
-                    onChange={handleCheckChange}
-                  />
+                  {requestList &&
+                    requestList.map((rl) => {
+                      return (
+                        <FormControlLabel
+                          color="success"
+                          value={rl.Request}
+                          control={<Checkbox />}
+                          label={rl.Request}
+                          labelPlacement="start"
+                          onChange={handleCheckChange}
+                        />
+                      );
+                    })}
                 </div>
               </div>
             ) : (
