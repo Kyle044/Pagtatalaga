@@ -53,6 +53,7 @@ router.get("/getAdminssiontRequestA", getAdminssiontRequestAccepted);
 
 router.post("/onQueue", markedOnQueueRequest);
 router.post("/markComplete", markedasAdoneRequest);
+
 router.post("/scanQR", scanQR);
 
 module.exports = router;

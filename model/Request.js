@@ -17,7 +17,7 @@ const requestSchema = new Schema(
     Status: { type: String, default: "Pending" },
     RequestedYear: String,
     RequestedSemester: String,
-    QueueNumber: String
+    QueueNumber: Number
   },
   { timestamps: true }
 );

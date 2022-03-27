@@ -115,8 +115,7 @@ function Infoform() {
       axios
         .post(`${process.env.REACT_APP_KEY}/insertRequest`, form)
         .then((res) => {
-          console.log(res.data);
-          alert("Successfully Submitted Wait for the email");
+          alert(res.data);
           setCurrent(0);
         })
         .catch((err) => {

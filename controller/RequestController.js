@@ -107,7 +107,7 @@ exports.insertRequest = (req, res) => {
   var integerMinutes = [];
   var sortedTime = [];
   var queue = null;
-  console.log(Appointment);
+
   Appointment.app.Time.forEach((appTime) => {
     var time = parseInt(
       appTime.Time.substring(0, 2) + appTime.Time.substring(3, 5)
@@ -125,14 +125,27 @@ exports.insertRequest = (req, res) => {
   });
   var b = 0;
   integerTime.forEach((time) => {
-    var hour = time.toString().substring(0, 2);
-    var minutes = time.toString().substring(2, 4);
+    var hour = null;
+    var minutes = null;
+
+    if (time.toString().length == 4) {
+      hour = time.toString().substring(0, 2);
+      minutes = time.toString().substring(2, 4);
+    } else {
+      hour = `0${time.toString().substring(0, 1)}`;
+      minutes = time.toString().substring(1, 4);
+    }
+
     sortedTime[b] = `${hour}:${minutes}`;
+
     if (`${hour}:${minutes}` == Appointment.time) {
       queue = b + 1;
     }
     b++;
   });
+
+  var queueInteger = parseInt(queue);
+
   App.findById(Appointment.app._id)
     .then((app) => {
       var objIndex = app.Time.findIndex((obj) => obj.Time == Appointment.time);
@@ -151,7 +164,7 @@ exports.insertRequest = (req, res) => {
         Email: Email,
         RequestedYear: ReqYr,
         RequestedSemester: ReqSem,
-        QueueNumber: queue
+        QueueNumber: queueInteger
       });
       newRequest.save().then((request) => {
         res.json("Submitted Successfully.");
@@ -214,21 +227,7 @@ exports.sendQr = (req, res) => {
     time,
     true
   ).then(() => {
-    Request.findById(req.body.data.request._id)
-      .then((request) => {
-        request.IsAccepted = "ACCEPTED";
-        request
-          .save()
-          .then((zz) => {
-            res.json("Successfully Accepted");
-          })
-          .catch((err) => {
-            res.json(err);
-          });
-      })
-      .catch((err) => {
-        res.json(err);
-      });
+    res.json("Successfully Accepted");
   });
 };
 
@@ -316,9 +315,21 @@ exports.markedasAdoneRequest = (req, res) => {
 };
 
 exports.scanQR = (req, res) => {
-  Request.findById(req.body.id).then((request) => {
-    res.json(request);
-  });
+  Request.findById(req.body.id)
+    .then((request) => {
+      request.IsAccepted = "ACCEPTED";
+      request
+        .save()
+        .then((request) => {
+          res.json(request);
+        })
+        .catch((err) => {
+          res.json(err);
+        });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 };
 
 exports.getRequestTodayAccepted = (req, res) => {
@@ -326,9 +337,11 @@ exports.getRequestTodayAccepted = (req, res) => {
     Office: "Registrar",
     "Appointment.date": moment(new Date()).format("YYYY-MM-DD"),
     IsAccepted: "ACCEPTED"
-  }).then((count) => {
-    res.json(count);
-  });
+  })
+    .sort({ QueueNumber: 1 })
+    .then((count) => {
+      res.json(count);
+    });
 };
 
 exports.getRequestAdminTodayAccepted = (req, res) => {
@@ -336,9 +349,11 @@ exports.getRequestAdminTodayAccepted = (req, res) => {
     Office: "Admission",
     "Appointment.date": moment(new Date()).format("YYYY-MM-DD"),
     IsAccepted: "ACCEPTED"
-  }).then((count) => {
-    res.json(count);
-  });
+  })
+    .sort({ QueueNumber: 1 })
+    .then((count) => {
+      res.json(count);
+    });
 };
 
 exports.getStudentRequestAccepted = (req, res) => {

@@ -33,15 +33,16 @@ function RegistrarQueue() {
       <div className="dashRegistrarQueue">
         <h1>Registrar Real-Time Queue </h1>
       </div>
+
       {state && (
-        <ul>
+        <ul className="queuelist">
           {state.length === 0 ? (
             <h1>Empty</h1>
           ) : (
             state.map((request) => {
               return (
-                <li key={request._id}>
-                  <h1>{request.QueueNumber}</h1>
+                <li key={request._id} className="lest">
+                  <h1>Queue # : {request.QueueNumber}</h1>
                   <h1>{request.Name}</h1>
                   <h1>{request.StudentID}</h1>
                 </li>

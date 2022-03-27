@@ -1,0 +1,40 @@
+.dashRegistrarQueue {
+  background-color: rgb(52, 187, 52);
+  height: 10vh;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+.dashRegistrarQueue h1 {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.queuelist {
+  display: flex;
+  flex-direction: column;
+  margin: 2vh;
+  height: auto;
+}
+
+.cara {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.lest {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vh;
+  margin-bottom: 10px;
+}
+.lest:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.lest h1 {
+  text-align: center;
+  font-size: 2.2rem;
+}
