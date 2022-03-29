@@ -1,6 +1,7 @@
 let Request = require("../model/Request");
 let App = require("../model/Appointment");
 const moment = require("moment");
+var mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 var QRCode = require("qrcode");
 var qr = require("qr-image");
@@ -323,7 +324,7 @@ exports.markedasAdoneRequest = (req, res) => {
 };
 
 exports.scanQR = (req, res) => {
-  var id = req.body.id.toString();
+  var id = mongoose.Types.ObjectId(req.body.id);
   Request.findById(id)
     .then((request) => {
       console.log(request.length);
