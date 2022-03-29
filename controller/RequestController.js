@@ -323,7 +323,8 @@ exports.markedasAdoneRequest = (req, res) => {
 };
 
 exports.scanQR = (req, res) => {
-  Request.findById(req.body.id)
+  var id = req.body.id.toString();
+  Request.findById(id)
     .then((request) => {
       console.log(request.length);
       if (request.Status == "EXPIRED") {
