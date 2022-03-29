@@ -14,7 +14,7 @@ function Infoform() {
   const initialForm = {
     Name: "",
     Age: 0,
-    StudentID: "",
+    StudentID: "Non Student",
     Year: "",
     Course: "",
     Admin: "Admission",
@@ -112,16 +112,32 @@ function Infoform() {
       form.Appointment.date &&
       form.Appointment.time
     ) {
-      axios
-        .post(`${process.env.REACT_APP_KEY}/insertRequest`, form)
-        .then((res) => {
-          alert(res.data);
-          setCurrent(0);
-        })
-        .catch((err) => {
-          console.log(err);
+      if (!form.StudentID) {
+        setForm((prev) => {
+          return { ...prev, StudentID: "Non Student" };
         });
-      setForm(initialForm);
+        axios
+          .post(`${process.env.REACT_APP_KEY}/insertRequest`, form)
+          .then((res) => {
+            alert(res.data);
+            setCurrent(0);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setForm(initialForm);
+      } else {
+        axios
+          .post(`${process.env.REACT_APP_KEY}/insertRequest`, form)
+          .then((res) => {
+            alert(res.data);
+            setCurrent(0);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setForm(initialForm);
+      }
     } else {
       alert("Please fill up the fields");
     }
@@ -480,6 +496,16 @@ function Infoform() {
                 type="submit"
                 className="btnGreen"
                 onClick={() => {
+                  setForm((prev) => {
+                    return {
+                      ...prev,
+                      Appointment: {
+                        app: "",
+                        date: "",
+                        time: ""
+                      }
+                    };
+                  });
                   prevApp();
                 }}
               >

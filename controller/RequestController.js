@@ -178,7 +178,7 @@ exports.insertRequest = (req, res) => {
 exports.getStudentRequest = (req, res) => {
   Request.find({
     Office: "Registrar",
-    IsAccepted: "NOT ACCEPTED"
+    isEmailed: "FALSE"
   })
     .then((request) => {
       res.json(request);
@@ -189,7 +189,7 @@ exports.getStudentRequest = (req, res) => {
 };
 
 exports.getAdminssiontRequest = (req, res) => {
-  Request.find({ Office: "Admission", IsAccepted: "NOT ACCEPTED" })
+  Request.find({ Office: "Admission", isEmailed: "FALSE" })
     .then((request) => {
       res.json(request);
     })
@@ -199,36 +199,44 @@ exports.getAdminssiontRequest = (req, res) => {
 };
 
 exports.sendQr = (req, res) => {
-  var timesOne = req.body.data.request.Appointment.app.Time.map((time) => {
-    return time.Time;
-  });
-  var times = req.body.data.request.Appointment.app.Time.map((time) => {
-    var newTime = time.Time.substring(0, 2) + time.Time.substring(4, 7);
-    return parseInt(newTime);
-  });
-  var sortedTime = times.sort(function (a, b) {
-    return a - b;
-  });
-
-  var i = 0;
-  var queueTime = sortedTime.map((st) => {
-    i++;
-    return { queue: i, time: timesOne[i - 1] };
-  });
-
-  let time = queueTime.find(
-    (o) => o.time === req.body.data.request.Appointment.time
-  );
-
-  smtp(
-    req.body.data.request.Email,
-    "Request Accepted",
-    req.body.data.data,
-    time,
-    true
-  ).then(() => {
-    res.json("Successfully Accepted");
-  });
+  Request.findById(req.body.data.request._id)
+    .then((request) => {
+      request.isEmailed = "TRUE";
+      request.save().then(() => {
+        var timesOne = req.body.data.request.Appointment.app.Time.map(
+          (time) => {
+            return time.Time;
+          }
+        );
+        var times = req.body.data.request.Appointment.app.Time.map((time) => {
+          var newTime = time.Time.substring(0, 2) + time.Time.substring(4, 7);
+          return parseInt(newTime);
+        });
+        var sortedTime = times.sort(function (a, b) {
+          return a - b;
+        });
+        var i = 0;
+        var queueTime = sortedTime.map((st) => {
+          i++;
+          return { queue: i, time: timesOne[i - 1] };
+        });
+        let time = queueTime.find(
+          (o) => o.time === req.body.data.request.Appointment.time
+        );
+        smtp(
+          req.body.data.request.Email,
+          "Request Accepted",
+          req.body.data.data,
+          time,
+          true
+        ).then(() => {
+          res.json("Successfully Accepted");
+        });
+      });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 };
 
 exports.rejectRequest = (req, res) => {
@@ -317,18 +325,24 @@ exports.markedasAdoneRequest = (req, res) => {
 exports.scanQR = (req, res) => {
   Request.findById(req.body.id)
     .then((request) => {
-      request.IsAccepted = "ACCEPTED";
-      request
-        .save()
-        .then((request) => {
-          res.json(request);
-        })
-        .catch((err) => {
-          res.json(err);
-        });
+      console.log(request.length);
+      if (request.Status == "EXPIRED") {
+        res.json("The QR Code is Expired.");
+      } else {
+        request.IsAccepted = "ACCEPTED";
+        request.Status = "EXPIRED";
+        request
+          .save()
+          .then((request) => {
+            res.json({ msg: "The Request is on Queue", data: request });
+          })
+          .catch((err) => {
+            res.json({ msg: "Error Saving the data", error: err });
+          });
+      }
     })
     .catch((err) => {
-      res.json(err);
+      res.json({ msg: "QR Code is Invalid", error: err });
     });
 };
 
@@ -371,6 +385,26 @@ exports.getStudentRequestAccepted = (req, res) => {
 
 exports.getAdminssiontRequestAccepted = (req, res) => {
   Request.find({ Office: "Admission", IsAccepted: "ACCEPTED" })
+    .then((request) => {
+      res.json(request);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+};
+
+exports.getEmailedAdminssion = (req, res) => {
+  Request.find({ Office: "Admission", isEmailed: "TRUE" })
+    .then((request) => {
+      res.json(request);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+};
+
+exports.getEmailedRegistrar = (req, res) => {
+  Request.find({ Office: "Registrar", isEmailed: "TRUE" })
     .then((request) => {
       res.json(request);
     })

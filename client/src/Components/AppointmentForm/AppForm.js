@@ -18,22 +18,41 @@ function AppForm({ admin }) {
     });
   };
   const handleAddTime = () => {
-    setState((prev) => {
-      return { ...prev, Time: [...prev.Time, { Student: "", Time: time }] };
-    });
-    setTime("");
+    var value;
+    if (time.substring(0, 1) == 0) {
+      value = time.substring(1, 2);
+    } else {
+      value = time.substring(0, 2);
+    }
+
+    if (value > 6 && value < 18) {
+      if (time) {
+        setState((prev) => {
+          return { ...prev, Time: [...prev.Time, { Student: "", Time: time }] };
+        });
+        setTime("");
+      } else {
+        alert("Input Time");
+      }
+    } else {
+      alert("Please pick a valid time.");
+    }
   };
   const handleSubmit = () => {
-    axios
-      .post(`${process.env.REACT_APP_KEY}/insertApp`, state)
-      .then((res) => {
-        console.log(res.data);
-        alert("Appointment Added");
-        setState(initialState);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (state.Date) {
+      axios
+        .post(`${process.env.REACT_APP_KEY}/insertApp`, state)
+        .then((res) => {
+          console.log(res.data);
+          alert("Appointment Added");
+          setState(initialState);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      alert("Input Date");
+    }
   };
   return (
     <div className="masterAppform">

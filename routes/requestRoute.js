@@ -16,7 +16,9 @@ const {
   getAdminssiontRequestAccepted,
   getRequestAdminTodayAccepted,
   getRequestTodayAccepted,
-  getStudentRequestAccepted
+  getStudentRequestAccepted,
+  getEmailedRegistrar,
+  getEmailedAdminssion
 } = require("../controller/RequestController");
 
 const router = express.Router();
@@ -48,6 +50,11 @@ router.get("/requestTodayA", getRequestTodayAccepted);
 router.get("/getStudentRequestA", getStudentRequestAccepted);
 // all request of students for the admission that is accepted
 router.get("/getAdminssiontRequestA", getAdminssiontRequestAccepted);
+
+// all request of students for the registrar that is emailed
+router.get("/getEmailedRegistrar", getEmailedRegistrar);
+// all request of students for the admission that is emailed
+router.get("/getEmailedAdminssion", getEmailedAdminssion);
 
 //API ENDPOINTS FOR THE DEVICE ==========================================================
 

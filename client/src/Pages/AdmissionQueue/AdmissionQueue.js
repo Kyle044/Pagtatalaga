@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-
+import moment from "moment";
 import axios from "axios";
 function AdmissionQueue() {
   // initializing the states
 
   const [state, setState] = useState();
 
-  //getRequestToday of the registrar
+  //getRequestToday of the admission
   const getRequest = () => {
     axios
-      .get(`${process.env.REACT_APP_KEY}/requestTodayA`)
+      .get(`${process.env.REACT_APP_KEY}/requestAdminTodayA`)
       .then((res) => {
         console.log(res.data);
         setState(res.data);
@@ -44,7 +44,12 @@ function AdmissionQueue() {
                 <li key={request._id} className="lest">
                   <h1>Queue # : {request.QueueNumber}</h1>
                   <h1>{request.Name}</h1>
-                  <h1>{request.StudentID}</h1>
+                  <h1>
+                    {request.StudentID ? request.StudentID : "Non Student"}
+                  </h1>
+                  <h1>
+                    {moment(request.Appointment.time, "hh:mm").format("LT")}
+                  </h1>
                 </li>
               );
             })

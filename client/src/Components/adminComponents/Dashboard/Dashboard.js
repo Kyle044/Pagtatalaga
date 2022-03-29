@@ -15,14 +15,16 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
   const [admissionAcceptedRequest, setAdmissionAcceptedRequest] = useState();
 
   const getRegistrarAcceptedRequest = () => {
-    axios.get(`${process.env.REACT_APP_KEY}/getStudentRequestA`).then((res) => {
-      setRegistrarAcceptedRequest(res.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_KEY}/getEmailedRegistrar`)
+      .then((res) => {
+        setRegistrarAcceptedRequest(res.data);
+      });
   };
 
   const getAdmissionAcceptedRequest = () => {
     axios
-      .get(`${process.env.REACT_APP_KEY}/getAdminssiontRequestA`)
+      .get(`${process.env.REACT_APP_KEY}/getEmailedAdminssion`)
       .then((res) => {
         setAdmissionAcceptedRequest(res.data);
       });
@@ -115,6 +117,11 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
       .post(`${process.env.REACT_APP_KEY}/sendQr`, { data: src })
       .then((res) => {
         alert(res.data);
+        getStudent();
+        getAdmission();
+        getRegistrarAcceptedRequest();
+        getAdmissionAcceptedRequest();
+        handleClose();
       })
       .catch((err) => {
         console.log(err);
@@ -305,7 +312,7 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
                             }}
                             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
                           >
-                            Accept
+                            Send QR
                           </div>
                           <div
                             onClick={() => {
@@ -344,7 +351,7 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
                             }}
                             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
                           >
-                            Accept
+                            Send QR
                           </div>
                           <div
                             onClick={() => {
@@ -455,7 +462,8 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
                       </tr>
                     );
                   })
-                : admissionAcceptedRequest.map((stud) => {
+                : admissionAcceptedRequest &&
+                  admissionAcceptedRequest.map((stud) => {
                     return (
                       <tr>
                         <td class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
@@ -474,14 +482,6 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
                           })}
                         </td>
                         <td class="flex  items-center border-b border-slate-100 dark:border-slate-700 p-4 pr-8 text-slate-500 dark:text-slate-400">
-                          <div
-                            onClick={() => {
-                              handleOpen(stud);
-                            }}
-                            className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
-                          >
-                            Accept
-                          </div>
                           <div
                             onClick={() => {
                               handleReject(stud);
