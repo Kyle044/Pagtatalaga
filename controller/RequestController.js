@@ -324,8 +324,7 @@ exports.markedasAdoneRequest = (req, res) => {
 };
 
 exports.scanQR = (req, res) => {
-  var id = mongoose.Types.ObjectId(req.body.id);
-  Request.findById(id)
+  Request.findById(req.body.id.trim())
     .then((request) => {
       console.log(request.length);
       if (request.Status == "EXPIRED") {
