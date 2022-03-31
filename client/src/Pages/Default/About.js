@@ -8,7 +8,7 @@ function About() {
       <div className="backg">
         <nav>
           <Link to="/">
-            <img src="img/mergedlogo.png" height={170} />
+            <img src="img/mergedlogo.PNG" height={170} />
           </Link>
           <div className="conttwo">
             <label for="toggle">&#9776;</label>

@@ -54,15 +54,23 @@ async function smtp(to, sub, mes, date) {
 }
 
 exports.insertAppointment = (req, res) => {
-  var newApp = new Appointment(req.body);
-  newApp
-    .save()
-    .then((data) => {
-      res.json("Success");
-    })
-    .catch((err) => {
-      res.json(err);
-    });
+  Appointment.find({ Date: req.body.Date, Office: req.body.Office }).then(
+    (appointment) => {
+      if (appointment.length) {
+        res.json("There was a Data Duplication");
+      } else {
+        var newApp = new Appointment(req.body);
+        newApp
+          .save()
+          .then((data) => {
+            res.json("Success Adding an appointment");
+          })
+          .catch((err) => {
+            res.json(err);
+          });
+      }
+    }
+  );
 };
 
 exports.getAppointment = (req, res) => {
@@ -184,4 +192,24 @@ exports.editAppointment = (req, res) => {
     .catch((err) => {
       res.json(err);
     });
+};
+
+exports.deleteTime = (req, res) => {
+  const { Name, Age, Purpose, Appointment } = req.body.Request;
+  Request.findOneAndDelete({
+    Name: Name,
+    Age: Age,
+    Purpose: Purpose,
+    Appointment: Appointment
+  })
+    .then((request) => {
+      res.json("Successfully Deleted");
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+};
+
+exports.addTime = (req, res) => {
+  console.log(req.body.data);
 };

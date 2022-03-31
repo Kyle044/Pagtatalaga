@@ -43,8 +43,7 @@ function AppForm({ admin }) {
       axios
         .post(`${process.env.REACT_APP_KEY}/insertApp`, state)
         .then((res) => {
-          console.log(res.data);
-          alert("Appointment Added");
+          alert(res.data);
           setState(initialState);
         })
         .catch((err) => {

@@ -7,12 +7,13 @@ import Modal from "@mui/material/Modal";
 function Appointment({ admin }) {
   const [appointment, setAppointment] = useState([]);
   const [modal, setModal] = useState(false);
-  const [selectedApp, setSelectedApp] = useState();
-  const [editAppointment, setEditAppointment] = useState({
-    id: "",
-    date: "",
-    time: []
+  const [selectedApp, setSelectedApp] = useState({
+    Date: "",
+    Office: "",
+    Time: [],
+    _id: ""
   });
+  const [time, setTime] = useState();
   const handleAppointmentChange = (e) => {
     const { name, value } = e.target;
 
@@ -84,16 +85,32 @@ function Appointment({ admin }) {
   };
 
   const handleDeleteTime = (time) => {
-    console.log(time);
-
-    setSelectedApp((prev) => {
-      return {
-        ...prev,
-        Time: prev.Time.filter((e) => {
-          return e != time;
+    if (
+      window.confirm(
+        "Note that if you delete the time the request will be deleted also"
+      )
+    ) {
+      axios
+        .post(`${process.env.REACT_APP_KEY}/deleteTime`, time)
+        .then((res) => {
+          if (res.data == "Successfully Deleted") {
+            setSelectedApp((prev) => {
+              return {
+                ...prev,
+                Time: prev.Time.filter((e) => {
+                  return e != time;
+                })
+              };
+            });
+          } else {
+            console.log("There was an error");
+          }
         })
-      };
-    });
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+    }
   };
   const submitEditedAppointment = (id) => {
     axios
@@ -124,6 +141,32 @@ function Appointment({ admin }) {
         console.log(err);
       });
   };
+
+  const AddTime = () => {
+    if (time) {
+      var value;
+      if (time.substring(0, 1) == 0) {
+        value = time.substring(1, 2);
+      } else {
+        value = time.substring(0, 2);
+      }
+      if (value > 6 && value < 18) {
+        var newArray = selectedApp.Time.concat({
+          Time: time,
+          Request: { Status: "Pending" }
+        });
+        setSelectedApp((prev) => {
+          return { ...prev, Time: newArray };
+        });
+        setTime("");
+      } else {
+        alert("Please enter a valid time");
+      }
+    } else {
+      alert("Please input a time");
+    }
+  };
+
   return (
     <div>
       <div className="h-20 bg-green-600 flex items-center p-3">
@@ -193,6 +236,25 @@ function Appointment({ admin }) {
                   name="Date"
                   onChange={handleAppointmentChange}
                 />
+                <label>Add Time</label>
+                <input
+                  type="time"
+                  value={time}
+                  name="time"
+                  onChange={(e) => {
+                    setTime(e.target.value);
+                  }}
+                />
+
+                <div
+                  className="btnGreen"
+                  onClick={() => {
+                    AddTime();
+                  }}
+                >
+                  Add Time
+                </div>
+
                 <label className="my-4">Time</label>
                 <ul>
                   {selectedApp.Time.map((time) => {

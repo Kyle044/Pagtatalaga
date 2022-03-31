@@ -14,7 +14,7 @@ function Infoform() {
   const initialForm = {
     Name: "",
     Age: 0,
-    StudentID: "Non Student",
+    StudentID: "",
     Year: "",
     Course: "",
     Admin: "Admission",

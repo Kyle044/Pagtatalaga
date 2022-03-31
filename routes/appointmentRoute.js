@@ -10,7 +10,9 @@ const {
   getAppointmentReg,
   getTodayAppointmentAdmin,
   getTodayAppointmentReg,
-  editAppointment
+  editAppointment,
+  deleteTime,
+  addTime
 } = require("../controller/AppointmentController");
 const requireRegistrarLogin = require("../Middleware/requireRegistrarLogin");
 const router = express.Router();
@@ -25,5 +27,7 @@ router.get("/getAppTodayAdmin", getTodayAppointmentAdmin);
 router.get("/getAppTodayReg", getTodayAppointmentReg);
 router.get("/getAppReg", getAppointmentReg);
 router.get("/getAppAdmin", getAppointmentAdmin);
+router.post("/deleteTime", deleteTime);
+router.post("/addTime", addTime);
 router.delete("/deleteApp", deleteApp);
 module.exports = router;

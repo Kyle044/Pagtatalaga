@@ -136,6 +136,8 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
           alert(res.data);
           getStudent();
           getAdmission();
+          getRegistrarAcceptedRequest();
+          getAdmissionAcceptedRequest();
         })
         .catch((err) => {
           console.log(err);
