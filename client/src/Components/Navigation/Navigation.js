@@ -6,7 +6,7 @@ function Navigation() {
   return (
     <div className="navigation">
       <nav>
-        <Link to="/">
+        <Link to="/" style={{ padding: "1rem" }}>
           <img src="img/mergedlogo.PNG" height={170} />
         </Link>
         <div className="conttwo">

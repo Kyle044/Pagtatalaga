@@ -32,6 +32,7 @@ nav a img {
   height: auto;
   justify-content: center;
   position: relative;
+  margin: 0;
 }
 nav a {
   width: auto;
