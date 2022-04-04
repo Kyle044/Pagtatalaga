@@ -103,5 +103,8 @@ nav label {
   }
   #toggle:checked + .navlinks {
     display: block;
+    margin-top: 2rem;
+    background-color: black;
+    z-index: 99;
   }
 }
