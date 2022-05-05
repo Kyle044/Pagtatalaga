@@ -60,3 +60,20 @@ exports.Signin = (req, res) => {
     })
     .catch((err) => res.status(400).json("The Error is : " + err));
 };
+
+exports.editPassword = (req, res) => {
+  const { id, newPassword } = req.body;
+
+  RegistrarAdmin.findById(id)
+    .then((data) => {
+      bcrypt.hash(newPassword, 12).then((hashedpassword) => {
+        data.Password = hashedpassword;
+        data.save().then(() => {
+          res.json("Password Successfully Updated");
+        });
+      });
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+};

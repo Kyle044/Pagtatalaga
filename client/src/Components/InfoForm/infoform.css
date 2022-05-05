@@ -59,11 +59,33 @@
   background-color: rgb(43, 168, 43);
   padding: 10px;
   border-radius: 4px;
-  width: 100%;
+  width: 20%;
+  min-width: 89px;
   transition: 0.1s ease;
   cursor: pointer;
 }
 
 .cardApp:hover {
   border: 2px solid black;
+}
+
+.timeSubContainer {
+  background-color: rgb(170, 170, 170);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 5px;
+}
+.dateSubContainer {
+  background-color: rgb(170, 170, 170);
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 5px;
+}
+
+.containerText {
+  font-size: 1rem;
 }

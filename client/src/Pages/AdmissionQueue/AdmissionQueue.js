@@ -44,9 +44,7 @@ function AdmissionQueue() {
                 <li key={request._id} className="lest">
                   <h1>Queue # : {request.QueueNumber}</h1>
                   <h1>{request.Name}</h1>
-                  <h1>
-                    {request.StudentID ? request.StudentID : "Non Student"}
-                  </h1>
+
                   <h1>
                     {moment(request.Appointment.time, "hh:mm").format("LT")}
                   </h1>

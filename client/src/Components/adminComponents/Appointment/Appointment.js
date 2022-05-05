@@ -256,7 +256,7 @@ function Appointment({ admin }) {
                 </div>
 
                 <label className="my-4">Time</label>
-                <ul>
+                <ul className="overflow-y-scroll overflow-x-hidden">
                   {selectedApp.Time.map((time) => {
                     return (
                       <li className="flex w-full  m-1 items-center justify-between p-2">

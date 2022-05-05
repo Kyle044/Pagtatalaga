@@ -96,7 +96,7 @@ function AppForm({ admin }) {
         <h4 className="font-bold mb-4 text-lg">
           {state.Date ? moment(state.Date).format("LL") : "Empty"}
         </h4>
-        <ul>
+        <ul className="overflow-x-hidden overflow-y-scroll ">
           {state.Time.map((t) => {
             return (
               <li className="bg-green-600 w-32 text-center p-2 rounded-md font-bold mb-4">

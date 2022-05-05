@@ -44,8 +44,14 @@ async function smtp(to, sub, mes, time, status) {
     </head>
     <body>
     
-    <h1>QR Code to Present</h1>
-    
+    <h4>Greetings, your request for an appointment on ${time.date},   ${moment(
+      time.time,
+      "hh:mm"
+    ).format(
+      "LT"
+    )} was approved. Please present this QR code to the PLSP E-Transaction Kiosk. Thank you!</h4>
+  
+  
     </body>
     
     </html>`, // html body,
@@ -228,7 +234,7 @@ exports.sendQr = (req, res) => {
           req.body.data.request.Email,
           "Request Accepted",
           req.body.data.data,
-          time,
+          req.body.data.request.Appointment,
           true
         ).then(() => {
           res.json("Successfully Accepted");
@@ -244,15 +250,30 @@ exports.rejectRequest = (req, res) => {
   smtp(req.body.Email, "Request Rejected", req.body, 0, false).then(() => {
     console.log(req.body.Appointment.time);
 
-    App.findByIdAndUpdate(req.body.Appointment.app._id, {
-      $pull: {
-        Time: { Time: req.body.Appointment.time }
-      }
+    App.findById({
+      _id: req.body.Appointment.app._id
     })
       .then((appointment) => {
-        Request.findByIdAndDelete(req.body._id)
+        // console.log(appointment.Time);
+        var pending = { Status: "Pending" };
+        const newState = appointment.Time.map((obj) =>
+          obj.Time == req.body.Appointment.time
+            ? { _id: obj._id, Time: obj.Time, Request: pending }
+            : obj
+        );
+        appointment.Time = newState;
+        appointment.save();
+        Request.findById(req.body._id)
           .then((reqs) => {
-            res.json("Successfully Rejected");
+            reqs.IsAccepted = "REJECTED";
+            reqs
+              .save()
+              .then(() => {
+                res.json("Successfully Rejected");
+              })
+              .catch((err) => {
+                res.json(err);
+              });
           })
           .catch((err) => {
             res.json(err);

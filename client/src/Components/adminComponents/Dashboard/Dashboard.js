@@ -261,24 +261,24 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
             <thead>
               <tr>
                 {admin.Authentication == "registrar" ? (
-                  <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                     Student #
                   </th>
                 ) : null}
 
-                <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Name
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Age
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Appointment
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Purpose
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Option
                 </th>
               </tr>
@@ -314,7 +314,7 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
                             }}
                             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
                           >
-                            Send QR
+                            Approve Appointment
                           </div>
                           <div
                             onClick={() => {
@@ -405,24 +405,24 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
             <thead>
               <tr>
                 {admin.Authentication == "registrar" ? (
-                  <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                  <th class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                     Student #
                   </th>
                 ) : null}
 
-                <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Name
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Age
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Appointment
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Purpose
                 </th>
-                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                <th class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-black dark:text-slate-200 text-left">
                   Option
                 </th>
               </tr>

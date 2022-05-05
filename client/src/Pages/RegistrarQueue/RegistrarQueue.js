@@ -45,7 +45,7 @@ function RegistrarQueue() {
                 <li key={request._id} className="lest">
                   <h1>Queue # : {request.QueueNumber}</h1>
                   <h1>{request.Name}</h1>
-                  <h1>{request.StudentID}</h1>
+
                   <h1>
                     {moment(request.Appointment.time, "hh:mm").format("LT")}
                   </h1>

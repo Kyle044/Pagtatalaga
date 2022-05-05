@@ -188,8 +188,8 @@ function Infoform() {
           in forfeiture of application.
         </p>
       ) : current == 1 ? (
-        <p className="pheader">
-          Selecting an Office to request & The Purpose of requesting.
+        <p className="pheader text-red-400">
+          Fill up in 1 if you are graduated and if not , then fill up on 2.
         </p>
       ) : current == 2 ? (
         <p className="pheader">
@@ -204,7 +204,7 @@ function Infoform() {
       <div className="infoform">
         {current == 0 ? (
           <div className="personalForm">
-            <label>Surename , Firstname , Middlename</label>
+            <label>Surname , Firstname , Middlename</label>
             <input
               type="text"
               name="Name"
@@ -275,22 +275,30 @@ function Infoform() {
           </div>
         ) : current == 1 ? (
           <div className="purposeDiv">
-            {form.Type == "Student" && (
-              <label>What Semester of Document are you requesting?</label>
+            {(form.Type == "Student") & !form.ReqYr ? (
+              <label className="text-red-400">1. What Year Graduated</label>
+            ) : (
+              ""
             )}
-            {form.Type == "Student" && (
+            {(form.Type == "Student") & !form.ReqYr ? (
               <input
                 type="text"
                 name="ReqSem"
-                placeholder="Input Semester"
+                placeholder="Input Year"
                 onChange={handleChange}
                 value={form.ReqSem}
               />
+            ) : (
+              ""
             )}
-            {form.Type == "Student" && (
-              <label>What Year of Document are you requesting?</label>
+            {(form.Type == "Student") & !form.ReqSem ? (
+              <label className="text-red-400">
+                2. Last School Year Attended
+              </label>
+            ) : (
+              ""
             )}
-            {form.Type == "Student" && (
+            {(form.Type == "Student") & !form.ReqSem ? (
               <input
                 type="text"
                 name="ReqYr"
@@ -298,6 +306,8 @@ function Infoform() {
                 onChange={handleChange}
                 value={form.ReqYr}
               />
+            ) : (
+              ""
             )}
 
             <label>Office of</label>
@@ -444,7 +454,7 @@ function Infoform() {
                 </div>
               </div>
               <div className="dateContainer">
-                <h4>Available Date Appointment</h4>
+                <h4 className="containerText">Available Date Appointment</h4>
                 <div className="dateSubContainer">
                   {appointment &&
                     appointment.map((app) => {
@@ -480,7 +490,9 @@ function Infoform() {
                               });
                             }}
                           >
-                            <h4>{moment(app.Date).format("MMMM Do YYYY")} </h4>
+                            <h4 className="containerText">
+                              {moment(app.Date).format("MMMM Do YYYY")}{" "}
+                            </h4>
                           </div>
                         );
                       } else {

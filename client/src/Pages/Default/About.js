@@ -47,7 +47,7 @@ function About() {
                 Pamantasan ng Lungsod ng San Pablo
               </a>
             </h1>
-            <h2 className="	textb">
+            <h2 className="italic	textb">
               <br />
               Dalubhasaan ng Lungsod ng San Pablo is currently located at
               Alvarez Street, Barangay San Jose (Malamig), San Pablo City,
@@ -66,20 +66,55 @@ function About() {
 
           <div className="mvimg 	pt-5 pb-5	">
             <br />
-            <br />
-            <br />
-            <h1 className="texth">Mission</h1>
-            <h2 className="	textb">
+
+            <h1 className="texth">MISSION</h1>
+            <h2 className="italic	textb ">
               {" "}
-              To provide well-balanced and relevant educational program
-              fortified with strong Filipino values and ideals
+              The Pamantasan ng Lungsod ng San Pablo mission statement is - To
+              strengthen and synergize instruction, research and extension,
+              administration and student development creating a learning
+              community that ensure the generation of God-kiving and holistic
+              graduates prepared ffor civic engagement and academic and life
+              success.
             </h2>
             <br />
             <br />
-            <h1 className="texth">Vision</h1>
-            <h2 className="	textb">
+            <h1 className="texth">VISION</h1>
+            <h2 className="italic	textb">
               {" "}
-              A University producing competent and competitive graduates
+              The Pamantasan ng Lungsod ng San Pablso is a Center of Exellence
+              upholding glocally - responsive education dedicated to transform
+              lives and empower communities.
+            </h2>
+          </div>
+          <div className="coreimg pt-5 pb -5">
+            <br />
+
+            <h1 className="texth">CORE VALUES</h1>
+            <p className="h2wo italic textb w-full">
+              {" "}
+              • Patriotism
+              <br />
+              • Leadership
+              <br />
+              • Service
+              <br />
+              • Professionalism
+              <br />
+            </p>
+            <br />
+
+            <h1 className="texth">PHILOSOPY</h1>
+            <h2 className="italic textb">
+              {" "}
+              The Pamantasan ng Lungsod ng San Pablo is deeply committed towards
+              the intergal formation of the guman person, with a profound faith
+              in God, in his fellow men and himself by providing by the students
+              the full development of their physical, intellectual, social and
+              cultural endowment for effective participation in various
+              professions and industrial occupations and to enable them to enjoy
+              reasonable quality of life to be able to contribute to the
+              uplifment of the human society.
             </h2>
           </div>
         </div>
@@ -182,7 +217,7 @@ function About() {
                 <br />
                 Course: Bachelor of Science in Computer Engineering
                 <br />
-                Age: 22 <br />
+                Age: 25 <br />
                 Cp no.: 09668099675 <br />
                 School: Pamantasan ng Lungsod ng San Pablo
               </p>

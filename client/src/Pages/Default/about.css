@@ -38,6 +38,12 @@ h2 {
   margin-right: 50px;
   text-align: justify;
 }
+.h2wo {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 2rem 3rem;
+  text-align: justify;
+}
 .simg {
   background-image: url(/public/img/school.jpg);
   height: 70vh;
@@ -88,6 +94,35 @@ h2 {
       rgba(84, 235, 134, 0.7)
     ),
     url(/public/img/mission.png);
+  height: 75vh;
+  width: 550px;
+  top: 0;
+  left: 0;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
+}
+
+.coreimg {
+  background-image: url(/public/img/coreimg.jpg);
+  height: 70vh;
+  width: 500px;
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+  color: transparent;
+  text-align: center;
+  overflow: hidden;
+  transition: 0.5s;
+  border-radius: 1rem;
+  margin: 0.5rem;
+}
+
+.coreimg:hover {
+  background-image: linear-gradient(
+      rgba(10, 73, 245, 0.7),
+      rgba(84, 235, 134, 0.7)
+    ),
+    url(/public/img/coreimg.jpg);
   height: 75vh;
   width: 550px;
   top: 0;
@@ -301,6 +336,12 @@ h2 {
     width: auto;
   }
   .mvimg:hover {
+    width: auto;
+  }
+  .coreimg {
+    width: auto;
+  }
+  .coreimg:hover {
     width: auto;
   }
   .texth {
