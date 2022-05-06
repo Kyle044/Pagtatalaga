@@ -6,9 +6,12 @@ import axios from "axios";
 function Configuration() {
   const [courses, setCourses] = useState();
   const [course, setCourse] = useState("");
+  const [type,setType] = useState("")
+  const [window, setWindow] = useState("");
   const [request, setRequest] = useState("");
   const [requestList, setRequestList] = useState();
   const [toEdit, setToEdit] = useState({ value: "", state: "", id: "" });
+  const [editCourse,setEditCourse] = useState({Course:"",Window:""})
   const modal = useRef();
   // toggle State
   const [toggle, setToggle] = useState({
@@ -112,9 +115,12 @@ function Configuration() {
     });
     if (boolean) {
       // edit course
+      setEditCourse({Course:id.Course,Window:id.Window})
+      setType("course")
       setToEdit({ value: id.Course, state: "course", id: id._id });
     } else {
       //edit request
+      setType("request")
       setToEdit({ value: id.Request, state: "request", id: id._id });
     }
   };
@@ -122,10 +128,10 @@ function Configuration() {
   const submit = () => {
     if (toggle.addC) {
       axios
-        .post(`${process.env.REACT_APP_KEY}/insertCourse`, { course })
+        .post(`${process.env.REACT_APP_KEY}/insertCourse`, { course,window })
         .then((res) => {
           alert(res.data);
-
+          setWindow("")
           setCourse("");
         })
         .catch((err) => {
@@ -148,7 +154,7 @@ function Configuration() {
     } else if (toggle.edit) {
       if (toEdit.state == "course") {
         axios
-          .post(`${process.env.REACT_APP_KEY}/editCourse`, toEdit)
+          .post(`${process.env.REACT_APP_KEY}/editCourse`, {toEdit:toEdit,val:editCourse})
           .then((res) => {
             alert(res.data);
             getCourse();
@@ -212,7 +218,7 @@ function Configuration() {
                           <div className="btnGroup">
                             <div
                               onClick={() => {
-                                edit(c, true);
+                                edit(c, true,"course");
                               }}
                             >
                               <FiEdit />
@@ -336,10 +342,21 @@ function Configuration() {
                 <input
                   type="text"
                   name=""
+                  placeholder="Course"
                   id=""
                   value={course}
                   onChange={(e) => {
                     setCourse(e.target.value);
+                  }}
+                />
+                 <input
+                  type="text"
+                  name=""
+                  id=""
+                  placeholder="Window"
+                  value={window}
+                  onChange={(e) => {
+                    setWindow(e.target.value);
                   }}
                 />
               </div>
@@ -355,28 +372,54 @@ function Configuration() {
                   }}
                 />
               </div>
-            ) : toggle.edit ? (
-              <div className="contentForEdit">
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  value={toEdit.value}
-                  onChange={(e) => {
-                    setToEdit((prev) => {
-                      return { ...prev, value: e.target.value };
-                    });
-                  }}
-                />
-              </div>
-            ) : null}
+            ) : toggle.edit && type=="course" ? (
+              <div className="contentForCourse">
+              <input
+                type="text"
+                name=""
+                placeholder="Course"
+                id=""
+                value={editCourse.Course}
+                onChange={(e) => {
+               setEditCourse(prev=>{
+                return{...prev,Course:e.target.value}
+               })
+                }}
+              />
+               <input
+                type="text"
+                name=""
+                id=""
+                placeholder="Window"
+                value={editCourse.Window}
+                onChange={(e) => {
+                  setEditCourse(prev=>{
+                    return{...prev,Window:e.target.value}
+                   })
+                }}
+              />
+            </div>
+             
+            ) :  <div className="contentForEdit">
+            <input
+              type="text"
+              name=""
+              id=""
+              value={toEdit.value}
+              onChange={(e) => {
+                setToEdit((prev) => {
+                  return { ...prev, value: e.target.value };
+                });
+              }}
+            />
+          </div>}
             <div
-              className="btnGreen"
+              className="btnGreen h-10 m-1 "
               onClick={() => {
                 submit();
               }}
             >
-              <h3>Submit</h3>
+              <h4>Submit</h4>
             </div>
           </div>
         </div>

@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
   {
-    Course: String
+    Course: String,
+    Window:String
   },
   { timestamps: true }
 );

@@ -230,16 +230,10 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
         <h4 className="title">Student Request</h4>
         <div className="w-11/12 m-auto p-3 flex items-center">
           <div
-            onClick={() => {
-              if (admin.Authentication == "registrar") {
-                getStudent();
-              } else {
-                getAdmission();
-              }
-            }}
+           
             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
           >
-            All Request
+         Sort By Date
           </div>
           <div
             onClick={() => {
@@ -383,18 +377,10 @@ function Dashboard({ admin, setAdmin, totalRequest, totalAppointment, today }) {
             }}
             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
           >
-            All Request
+            Sort By Date
           </div>
           <div
-            onClick={() => {
-              if (admin.Authentication == "registrar") {
-                requestTodayA();
-                console.log(student);
-              } else {
-                requestAdminTodayA();
-                console.log(adminssion);
-              }
-            }}
+            
             className="border w-fit p-2 rounded-3xl duration-200 mr-1 cursor-pointer text-xs bg-green-600 font-bold  text-white hover:bg-green-400 "
           >
             Request Today

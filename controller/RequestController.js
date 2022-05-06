@@ -15,11 +15,16 @@ async function smtp(to, sub, mes, time, status) {
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
+   
     secure: false, // true for 465, false for other ports
     auth: {
       user: "pamantasan04@gmail.com", // generated ethereal user
       pass: "thesis123" // generated ethereal password
-    }
+    },
+    secureConnection: 'false',
+    tls: {
+      ciphers: 'SSLv3'
+  }
   });
   //Quueing number   ${time.queue}
   if (status) {
@@ -59,7 +64,7 @@ async function smtp(to, sub, mes, time, status) {
   };
 
   var optionRejected = {
-    from: '"DLSB" <pamantasan@gmail.com>', // sender address
+    from: '"PLSP" <pamantasan@gmail.com>', // sender address
     to: to, // list of receivers
     subject: sub, // Subject line
     text: "the request was rejected due to inconsistent information or the information is not valid", // plain text body
@@ -70,8 +75,8 @@ async function smtp(to, sub, mes, time, status) {
   </style>
     </head>
     <body>
-    <h1>The Request is Rejected</h1>
-    <p>the request was rejected due to inconsistent information or the information is not valid</p>
+      <h3>Request Rejected
+      Your requested appointment was rejected due to lack of information or the information is not valid.</h3>
     </body>
     </html>`
   };
@@ -81,16 +86,18 @@ async function smtp(to, sub, mes, time, status) {
 
   if (status) {
     info = await transporter.sendMail(option);
+
   } else {
     info = await transporter.sendMail(optionRejected);
   }
-
+ 
   console.log("Message sent: %s", info.messageId);
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+ 
 }
 
 exports.insertRequest = (req, res) => {
@@ -206,6 +213,7 @@ exports.getAdminssiontRequest = (req, res) => {
 };
 
 exports.sendQr = (req, res) => {
+ 
   Request.findById(req.body.data.request._id)
     .then((request) => {
       request.isEmailed = "TRUE";
@@ -237,7 +245,7 @@ exports.sendQr = (req, res) => {
           req.body.data.request.Appointment,
           true
         ).then(() => {
-          res.json("Successfully Accepted");
+       res.json("Email has been Successfully Sent!")
         });
       });
     })

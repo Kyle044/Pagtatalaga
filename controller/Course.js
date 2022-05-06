@@ -1,6 +1,6 @@
 let Course = require("../model/Course");
 exports.insertCourse = (req, res) => {
-  var newCourse = new Course({ Course: req.body.course });
+  var newCourse = new Course({ Course: req.body.course,Window:req.body.window });
   newCourse
     .save()
     .then((c) => {
@@ -22,19 +22,24 @@ exports.getCourse = (req, res) => {
 };
 
 exports.deleteCourse = (req, res) => {
-  Course.findByIdAndDelete(req.body.data)
-    .then((course) => {
-      res.json("Successfully Deleted");
-    })
-    .catch((err) => {
-      res.json(err);
-    });
+  console.logo(req.body.data)
+  // Course.findByIdAndDelete(req.body.data)
+  //   .then((course) => {
+  //     res.json("Successfully Deleted");
+  //   })
+  //   .catch((err) => {
+  //     res.json(err);
+  //   });
 };
 exports.editCourse = (req, res) => {
-  console.log(req.body);
-  Course.findById(req.body.id)
+var id = req.body.toEdit.id;
+var coursez = req.body.val.Course;
+var window= req.body.val.Window;
+
+  Course.findById(id)
     .then((course) => {
-      course.Course = req.body.value;
+      course.Course = coursez;
+      course.Window = window;
       course
         .save()
         .then((c) => {
